@@ -339,8 +339,9 @@ namespace Fusee.Tutorial.Core
 
             // Bewegung der GreiferL
 
+       
             float greiferRot = _greiferLTransform.Rotation.z;
-            greiferRot+=65.0f*M.Pi/180.0f*DeltaTime*Keyboard.ADAxis;
+            greiferRot+=20.0f*M.Pi/180.0f*DeltaTime*Keyboard.ADAxis;
             Diagnostics.Log(greiferRot);
             _greiferLTransform.Rotation = new float3(0,0,greiferRot);
 
@@ -349,25 +350,29 @@ namespace Fusee.Tutorial.Core
 
 
             // Bewegung des GreiferR
+            
             float greiferRot1 = _greiferRTransform.Rotation.z;
-            greiferRot1-= 65.0f*M.Pi/180.0f*DeltaTime*Keyboard.ADAxis;
+            greiferRot1-= 20.0f*M.Pi/180.0f*DeltaTime*Keyboard.ADAxis;
             Diagnostics.Log(greiferRot1);
             _greiferRTransform.Rotation = new float3(0,0,greiferRot1);
-
+        
             // Bedingung des Öffnens
 
-            if(greiferRot == 0.3f && greiferRot1 == -0.3f){
+            if(greiferRot >= 0.1f  || greiferRot1 >= -0.15f   ){
 
-                greiferRot -= 65.0f*M.Pi/180.0f*DeltaTime;
-                _greiferLTransform.Rotation = new float3(0,0,greiferRot);
+            _greiferLTransform.Rotation = new float3(0,0,-0.15f);
 
+            _greiferRTransform.Rotation = new float3(0,0,-0.15f);
 
-                greiferRot1 += 65.0f*M.Pi/180.0f*DeltaTime;
-                _greiferRTransform.Rotation = new float3(0,0,greiferRot1);
+            }else if( greiferRot >= 4.0f || greiferRot1 <= -4.0f  ){
 
+                _greiferLTransform.Rotation = new float3(0,0,-4.0f);
 
+                _greiferRTransform.Rotation = new float3(0,0,4.0f);
 
             }
+            
+
             // Bewegung mit Mouse
 
             if(Mouse.LeftButton == true){
